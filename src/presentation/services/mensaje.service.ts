@@ -1,6 +1,6 @@
 import { Campania, Mensaje } from "../../data/mysql/entities";
 import { AppDataSource } from "@/data/mysql/mysql-database";
-import { Brackets, DataSource } from "typeorm";
+import { Brackets, DataSource, IsNull } from "typeorm";
 import { CustomError } from "@/domain";
 import { CreateMensajeDto } from "@/domain/dto/mensaje/create-mensaje.dto";
 import { UpdateMensajeDto } from "@/domain/dto/mensaje/update-mensaje.dto";
@@ -118,22 +118,28 @@ export class MensajeService {
 
   filterMensaje = async (filterMensajeDto: FilterMensajeDto) => {
     try {
-      const { id ,estadoEnvio,fechaHoraEnvio,cliente } = filterMensajeDto;
-      console.log(cliente)
+      const { estado ,estadoEnvio,fechaHoraEnvio, cliente = null} = filterMensajeDto;
       const mesFilter = new Date(fechaHoraEnvio);
       const mes = mesFilter.getMonth() + 1;
       const messageRepository = (await this.dataSource).getRepository(Mensaje)
       
-      const queryMensaje = await messageRepository.createQueryBuilder("mensaje")    
+      const queryMensaje = await messageRepository.createQueryBuilder("mensaje")  
+      .select('mensaje.id,campania.nombre')  
       .innerJoinAndSelect('mensaje.campania','campania')
       .innerJoinAndSelect('campania.usuario','usuario')
       .innerJoinAndSelect('usuario.cliente','cliente')
-      .where("mensaje.estado = :estado", { estado: 1 })
+      .select(['campania.id','campania.nombre',
+      'mensaje.id','mensaje.mensaje','mensaje.estado','mensaje.estadoEnvio','mensaje.fechaHoraEnvio',
+      'usuario.id', 'usuario.usuario',
+      'cliente.id', 'cliente.nombre'])
+      .where("mensaje.estado = :estado", { estado: estado })
       .andWhere("MONTH(mensaje.fechaHoraEnvio) = :fechaHoraEnvio", { fechaHoraEnvio: mes })
+      .andWhere("mensaje.estadoEnvio = :estadoEnvio", { estadoEnvio: estadoEnvio })
       .andWhere(new Brackets((qb) => {
-        qb.where("LOWER(cliente.nombre) = :nombre", {nombre: cliente?.toLocaleLowerCase()}).orWhere("cliente.nombre = :nombreOr", { nombreOr: "" })
+        qb.where("cliente.id = :id", {id: cliente}).orWhere("cliente.id IS NOT :id", {id: null})
     }))
-      .getMany()
+    
+    .getMany()
  
 
       return { mensaje:queryMensaje };

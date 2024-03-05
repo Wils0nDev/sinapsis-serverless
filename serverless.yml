@@ -11,9 +11,9 @@ custom:
     target: node18
     sourcemap: linked
   serverless-offline:
-    httpPort: 6000
-    websocketPort: 6001
-    lambdaPort: 6002
+    httpPort: 4000
+    websocketPort: 4001
+    lambdaPort: 4002
     noPrependStageInUrl: true
     reloadHandler: true
 

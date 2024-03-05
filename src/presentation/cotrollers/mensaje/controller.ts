@@ -74,7 +74,7 @@ export class MensajeController {
 
       const filter = new FilterMensajeDto();
       try {
-          filter.id = body.id
+          filter.estado = body.estado
           filter.estadoEnvio = body.estadoEnvio
           filter.fechaHoraEnvio =  body.fechaHoraEnvio
           filter.cliente =  body.cliente

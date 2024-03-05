@@ -30,8 +30,7 @@ export class ClienteService {
     try {
      
       const clienteRepository = (await this.dataSource).getRepository(Cliente);
-      const resp =  await clienteRepository.find()
-      return { clientes : resp };
+      return await clienteRepository.find()
     } catch (error : any ) {
       if(error.code = 'ER_DUP_ENTRY') {
         throw CustomError.badRequest(`${error}`);

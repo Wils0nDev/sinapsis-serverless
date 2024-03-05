@@ -5,9 +5,9 @@ import {   IsDateString, IsInt, IsOptional, IsString } from "class-validator";
 export class FilterMensajeDto {
 
     @IsInt({
-        message : 'Identificador debe ser un número'
+        message: 'Envie un estado'
     })
-    id: number;
+    estado: number;
 
     @IsInt({
         message : 'Identificador debe ser un número'
@@ -18,8 +18,8 @@ export class FilterMensajeDto {
     })
     fechaHoraEnvio: Date;
 
-    @IsString()
+    @IsInt()
     @IsOptional()
-    cliente?: string;
+    cliente?: number;
 
 }
