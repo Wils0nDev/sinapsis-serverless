@@ -142,9 +142,9 @@ export class MensajeService {
     .getMany()
  
 
-      return { mensaje:queryMensaje };
+      return  queryMensaje ;
     } catch (error: any) {
-
+      
       if ((error.code = "ER_DUP_ENTRY")) {
         throw CustomError.badRequest(`${error}`);
       } else {
