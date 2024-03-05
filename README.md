@@ -1,5 +1,5 @@
 # SERVERLESS SINAPSIS
-
+ - Para este proyecto se utilizo el framework de Serverless en conjuto con Express
 ## Configuracion
 
 1. Configurar las credenciales de AWS key y secret_key en tu maquina local
