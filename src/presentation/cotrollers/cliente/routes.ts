@@ -14,7 +14,8 @@ export class ClienteRoutes {
     const clienteSerivce = new ClienteService()
     const controller = new ClienteController(clienteSerivce)
     router.post('/', controller.createCliente );
-
+    router.get('/', controller.getCliente );
+    
     return router;
   }
 

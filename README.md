@@ -14,6 +14,6 @@
 
 4. Ejecutar ```npm run dev:server```  para levantar el proyecto en modo desarrollo.
 
-5. Ejecutar ```npm run deploy:db```  para enviar bd al dominio en la nube.
+5. Ejecutar ```npm run deploy:db```  para enviar bd al dominio en la nube y seguir probando local.
 
 5. Ejecutar ```npm run deploy:app```  para deployar la apliacación en los servicios de AWS Lambda.

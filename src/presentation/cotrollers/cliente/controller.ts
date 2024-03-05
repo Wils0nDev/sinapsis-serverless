@@ -23,4 +23,18 @@ export class ClienteController {
       res.status(400).send({ message });
     }
   };
+
+  getCliente = async (req: Request, res: Response) => {
+   
+    try {
+     
+      await this.clienteSerivce
+        .getCliente()
+        .then((resp) => res.status(200).json(resp))
+        .catch((err) => handlerError(err, res));
+    } catch (e: any) {
+      const message = Object.values(e[0].constraints);
+      res.status(400).send({ message });
+    }
+  };
 }
